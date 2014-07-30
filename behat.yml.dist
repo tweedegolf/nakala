@@ -1,0 +1,9 @@
+default:
+    autoload:
+        '': %paths.base%/test/features/bootstrap
+    suites:
+        core:
+            paths:
+                - %paths.base%/test/features
+            contexts:
+                - CoreContext
