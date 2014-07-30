@@ -27,8 +27,11 @@ class Html implements ReaderInterface
     public function setContent($content)
     {
         $document = new \DOMDocument();
-        if (!$document->loadHTML($content)) {
-            throw new \InvalidInputException("No valid HTML document provided");
+        libxml_use_internal_errors(true);
+        $document->loadHTML($content);
+        if (count(libxml_get_errors()) > 0) {
+            libxml_clear_errors();
+            throw new \RuntimeException("No valid HTML document provided");
         }
 
         $this->elements = [];
@@ -43,7 +46,7 @@ class Html implements ReaderInterface
     {
         $head = $this->xpathFirst($this->content, '//head');
         if ($head) {
-            $title = $this->xpathFirst($head, '/title');
+            $title = $this->xpathFirst($head, './title');
             if ($title) {
                 $this->elements[] = new ElementEvent('document_title', $this->normalizeSpace($title->nodeValue));
             }

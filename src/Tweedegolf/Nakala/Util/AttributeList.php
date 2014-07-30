@@ -2,7 +2,7 @@
 
 namespace Tweedegolf\Nakala\Util;
 
-class AttributeList implements \ArrayAccess, \IteratorAggregate
+class AttributeList implements \ArrayAccess, \IteratorAggregate, \Countable
 {
     private $changes = [];
 
@@ -54,8 +54,6 @@ class AttributeList implements \ArrayAccess, \IteratorAggregate
                     foreach ($change['values'] as $key) {
                         unset($this->current[$key]);
                     }
-                    break;
-                default:
                     break;
             }
         }
@@ -157,5 +155,13 @@ class AttributeList implements \ArrayAccess, \IteratorAggregate
     public function getIterator()
     {
         return new \ArrayIterator($this->current);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->current);
     }
 }

@@ -17,7 +17,7 @@ use Tweedegolf\Nakala\Event\ElementEvent;
 use Tweedegolf\Nakala\Event\ElementEvents;
 use Tweedegolf\Nakala\Util\AttributeList;
 
-class Word implements OutputHandlerInterface
+class Word implements HandlerInterface
 {
     /**
      * @var Section
@@ -204,10 +204,5 @@ class Word implements OutputHandlerInterface
                 new DocumentConstructionEvent($this->section)
             );
         }
-    }
-
-    public function getOutput()
-    {
-        return '';
     }
 }
